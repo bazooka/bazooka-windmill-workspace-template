@@ -1,0 +1,24 @@
+# Node
+node_modules/
+
+# Windmill
+.wmill/
+
+# Windmill resource instances & variables can hold credentials, so they are
+# kept OUT of git by DEFAULT. Opt a vetted, secret-free item INTO git by giving
+# its Windmill name a `git_` prefix (e.g. f/rebilling/git_fortnox.resource.yaml).
+# Only do this AFTER its secret fields are marked secret in Windmill (so the file
+# holds `$var:` references, not plaintext). See README.md.
+# NOTE: *.resource-type.yaml (schemas, no secrets) are never matched here.
+*.resource.yaml
+*.variable.yaml
+!**/git_*.resource.yaml
+!**/git_*.variable.yaml
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store

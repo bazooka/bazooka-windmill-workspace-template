@@ -1,0 +1,36 @@
+name: Push to Windmill workspace
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - develop
+
+env:
+  WMILL_URL: https://version2.bazooka.dev/
+  WMILL_WORKSPACE: WORKSPACE_NAME
+
+jobs:
+  sync:
+    environment: windmill
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Guard against deploy loops if Windmill Git Sync is ever re-enabled:
+      # commits Windmill makes are prefixed with [WM] and must not be pushed back.
+      - name: Check commit message
+        id: check_message
+        run: |
+          if [[ "${{ github.event.head_commit.message }}" =~ ^\[WM\] ]]; then
+            echo "skip=skip" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push changes
+        if: steps.check_message.outputs.skip != 'skip'
+        run: |
+          npm install -g windmill-cli
+          wmill sync push --yes --skip-secrets --workspace ${{ env.WMILL_WORKSPACE }} --token ${{ secrets.WMILL_TOKEN }} --base-url ${{ env.WMILL_URL }}
