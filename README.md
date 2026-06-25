@@ -1,6 +1,6 @@
 # Bazooka Windmill Workspace — Mall
 
-Använd det här repot som **mall** för att skapa ett nytt Windmill-arbetsytere
+Använd det här repot som **mall** för att skapa ett nytt Windmill-arbetsyta
 på https://version2.bazooka.dev/.
 
 ## 🚀 Kom igång
