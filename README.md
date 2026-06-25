@@ -40,10 +40,18 @@ på https://version2.bazooka.dev/.
 Se [bazooka-windmill-workspace](https://github.com/bazooka/bazooka-windmill-workspace)
 för dokumentation om `git_`-prefixkonventionen för säker versionshantering av resurser.
 
-## 🌳 Git Flow
+## 🌳 Git Flow & Deploy
 
+Vi följer Git Flow:
 - **`main`** — speglar produktion.
 - **`develop`** — integrationsbranch.
 - **`feature/*`** — skapas från `develop`, PR tillbaka till `develop`.
 
-Deploy sker automatiskt via CI vid push till `main` eller `develop`.
+Deploy sker automatiskt via **GitHub Actions** vid push till `main` eller `develop`. 
+Endast kod (scripts/flows/apps) och säkra resurser deployas — CI kör med `--skip-secrets`, så själva hemliga värdena (`credentials`) rörs aldrig. Feature-brancher deployar inte.
+
+## 🔄 Synk-riktning (git → Windmill)
+
+Som standard är synken **enkelriktad** (git är källan, CI pushar till Windmill). Om någon redigerar direkt i Windmills GUI hamnar den ändringen **inte** i git automatiskt — kör `wmill sync pull`, committa och öppna en PR för att fånga in den.
+
+> Windmills inbyggda **Git Sync** är som standard **inte** aktiverad i nya workspaces. Vill ni i framtiden ha bidirektionell synk aktiverar ni Git Sync i Windmill mot detta repo. CI-flödet är redan förberett med ett `[WM]`-skydd för att förhindra deploy-loopar.

@@ -44,13 +44,13 @@ references and no plaintext credentials.
 `.github/workflows/push-on-merge.yaml` runs `wmill sync push` on push to `main` or
 `develop` (feature branches do **not** deploy). Deploy by committing and pushing — do
 not run `wmill sync push` by hand unless CI is broken or the user asks to bypass it.
-Only code is pushed (`--skip-resources --skip-variables --skip-secrets`).
+Only code and safe resources are pushed (`--skip-secrets`).
 
 ### Sync is one-way (git → Windmill)
-Windmill's built-in **Git Sync is not enabled**. Edits made directly in the Windmill UI
-are **not** captured in git automatically — run `wmill sync pull`, commit, and open a PR
-to bring them back. (The `[WM]` guard left in the workflow only matters if Git Sync is
-ever re-enabled.)
+By default, Windmill's built-in **Git Sync is not enabled** for new workspaces. Edits
+made directly in the Windmill UI are **not** captured in git automatically — run
+`wmill sync pull`, commit, and open a PR to bring them back. (The `[WM]` guard in the CI
+workflow is there in case Git Sync is enabled later to prevent loops).
 
 ### Git flow
 `feature/*` → PR → `develop` → release PR → `main`. All deploys target the same single
