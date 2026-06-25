@@ -1,11 +1,11 @@
 # Bazooka Windmill Workspace — Mall
 
-Använd det här repot som **template** för att skapa ett nytt Windmill-arbetsytere
+Använd det här repot som **mall** för att skapa ett nytt Windmill-arbetsytere
 på https://version2.bazooka.dev/.
 
 ## 🚀 Kom igång
 
-1. Skapa ett nytt repo från denna template på GitHub.
+1. Skapa ett nytt repo från denna mall på GitHub.
 2. Ersätt alla `WORKSPACE_NAME`-placeholderar i:
    - `wmill.yaml`
    - `AGENTS.md`
